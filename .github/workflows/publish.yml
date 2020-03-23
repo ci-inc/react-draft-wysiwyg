@@ -1,0 +1,44 @@
+name: publish
+
+env:
+  CI: true
+
+# master ブランチに push した時のみ実行する
+on:
+  push:
+    branches:
+      - master
+    tags:
+      - "!*"
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout
+        uses: actions/checkout@v1
+      - name: setup Node
+        uses: actions/setup-node@v1
+        with:
+          node-version: 13.x
+          registry-url: 'https://npm.pkg.github.com'
+          scope: '@ci-inc'
+      - name: install
+        run: npm install
+      - name: build
+        run: npm run build
+
+      # まだ publish されていないバージョンなら publish する
+      - name: publish
+        run: npx can-npm-publish --verbose && npm publish || echo "Cannot publish"
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      # まだ tag がないバージョンなら tag を push する
+      - name: package-version-to-git-tag
+        uses: pkgdeps/action-package-version-to-git-tag@v1
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          github_repo: ${{ github.repository }}
+          git_commit_sha: ${{ github.sha }}
+          git_tag_prefix: "v"

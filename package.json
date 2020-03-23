@@ -1,11 +1,11 @@
 {
-  "name": "react-draft-wysiwyg",
+  "name": "@ci-inc/react-draft-wysiwyg",
   "version": "1.14.4",
   "description": "A wysiwyg on top of DraftJS.",
   "main": "dist/react-draft-wysiwyg.js",
   "repository": {
     "type": "git",
-    "url": "https://github.com/jpuri/react-draft-wysiwyg.git"
+    "url": "https://github.com/ci-inc/react-draft-wysiwyg.git"
   },
   "author": "Jyoti Puri",
   "devDependencies": {
@@ -55,6 +55,7 @@
     "webpack-cli": "^3.3.10"
   },
   "dependencies": {
+    "can-npm-publish": "^1.3.2",
     "classnames": "^2.2.6",
     "draftjs-utils": "^0.10.2",
     "html-to-draftjs": "^1.5.0",
@@ -79,5 +80,9 @@
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook"
   },
-  "license": "MIT"
+  "license": "MIT",
+  "publishConfig": {
+    "access": "restricted",
+    "registry": "https://npm.pkg.github.com/"
+  }
 }
