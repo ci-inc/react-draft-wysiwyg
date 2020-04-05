@@ -73,6 +73,7 @@ export interface EditorProps {
     onChange: (editorState: EditorState) => void
   ): boolean;
   customStyleMap?: object;
+  isSoftReturnDefault?: boolean;
 }
 
 export class Editor extends React.Component<EditorProps> {
